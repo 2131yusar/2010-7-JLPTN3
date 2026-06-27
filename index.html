@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JLPT N3 2010年7月 クイズ</title>
+<style>
+:root {
+  --bg:#f0f2f5; --card:#fff; --dark:#1a1a2e; --sumi:#252220;
+  --gold:#d4a843; --green:#27ae60; --green-bg:#eafaf1;
+  --red:#c0392b; --red-bg:#fdf0ef;
+  --gray:#6b7280; --gray-light:#f4f5f7; --border:#e5e7eb;
+  --indigo:#33495c; --vermilion:#bc4a3c;
+  --shadow:0 2px 14px rgba(0,0,0,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;background:var(--bg);color:var(--sumi);min-height:100vh;}
+
+/* ===== HEADER ===== */
+.hdr{background:var(--dark);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.25);}
+.hdr-inner{max-width:780px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.hdr-title{font-family:"Noto Sans JP",sans-serif;font-size:.95rem;font-weight:700;color:#fff;letter-spacing:.04em;}
+.hdr-title .lv{color:var(--gold);font-size:1.15rem;margin-right:4px;}
+.hdr-pills{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:3px 11px;font-family:"Noto Sans JP",sans-serif;font-size:.72rem;color:rgba(255,255,255,.85);white-space:nowrap;}
+.pill b{color:var(--gold);}
+.prog-wrap{height:3px;background:rgba(255,255,255,.1);}
+.prog-fill{height:3px;background:linear-gradient(90deg,var(--gold),#f5c842);transition:width .4s ease;width:0%;}
+
+/* ===== COVER ===== */
+#cover{max-width:780px;margin:28px auto 0;padding:0 16px 60px;}
+.cover-card{background:linear-gradient(150deg,var(--dark) 0%,#233140 100%);border-radius:18px;padding:36px 32px;color:#f4ead0;position:relative;overflow:hidden;box-shadow:var(--shadow);}
+.cover-card::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(244,234,208,.08) 1px,transparent 1px);background-size:18px 18px;}
+.cover-stamp{position:absolute;top:20px;right:24px;width:64px;height:64px;border:2px solid var(--vermilion);border-radius:9px;color:var(--vermilion);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;transform:rotate(-5deg);background:rgba(188,74,60,.08);font-family:"Noto Sans JP",sans-serif;}
+.cover-kicker{font-family:"Noto Sans JP",sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;position:relative;}
+.cover-h1{font-size:1.6rem;font-weight:700;line-height:1.4;margin-bottom:6px;position:relative;}
+.cover-h1 .acc{color:#e8b96a;}
+.cover-sub{font-family:"Noto Sans JP",sans-serif;font-size:.82rem;color:#c5d4de;margin-bottom:22px;line-height:1.7;position:relative;}
+.cover-meta{display:flex;gap:16px;flex-wrap:wrap;font-family:"Noto Sans JP",sans-serif;font-size:.75rem;color:#9ab0c0;border-top:1px solid rgba(244,234,208,.15);padding-top:14px;position:relative;}
+.cover-meta b{color:#f4ead0;}
+.start-btn{position:relative;margin-top:20px;display:inline-flex;align-items:center;gap:8px;background:var(--vermilion);color:#fff7ec;border:none;font-family:"Noto Sans JP",sans-serif;font-weight:700;font-size:.9rem;padding:13px 26px;border-radius:999px;cursor:pointer;box-shadow:0 6px 18px rgba(188,74,60,.35);transition:transform .15s,box-shadow .15s;}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(188,74,60,.45);}
+
+/* ===== QUIZ AREA ===== */
+#quizArea{max-width:780px;margin:0 auto;padding:0 16px 80px;display:none;}
+
+/* Jump panel */
+.jump-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:14px;}
+.jump-label{font-family:"Noto Sans JP",sans-serif;font-size:.7rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+.jump-sections{}
+.jump-sec-title{font-family:"Noto Sans JP",sans-serif;font-size:.68rem;color:var(--gray);margin:8px 0 5px;font-weight:700;}
+.jump-sec-title:first-child{margin-top:0;}
+.jump-nums{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px;}
+.jbtn{width:32px;height:32px;border-radius:7px;border:1.5px solid var(--border);background:var(--card);font-family:"Noto Sans JP",sans-serif;font-size:.75rem;color:var(--gray);cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:600;transition:all .15s;}
+.jbtn:hover{border-color:var(--dark);color:var(--dark);}
+.jbtn.cur{border-color:var(--indigo);background:var(--indigo);color:#fff;}
+.jbtn.ok{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.jbtn.ng{background:var(--red-bg);border-color:var(--vermilion);color:var(--vermilion);}
+
+/* Progress */
+.prog-info{display:flex;justify-content:space-between;align-items:center;font-family:"Noto Sans JP",sans-serif;font-size:.75rem;color:var(--gray);margin:14px 0 6px;padding:0 2px;}
+.prog-info .sect-lbl{font-weight:700;color:var(--vermilion);}
+
+/* Card */
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;animation:rise .3s ease;}
+@keyframes rise{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+
+.sect-desc{font-family:"Noto Sans JP",sans-serif;font-size:.75rem;color:var(--gray);background:var(--gray-light);border-left:3px solid var(--gold);padding:9px 14px;line-height:1.65;}
+
+/* Translation box */
+.tl-box{font-family:"Noto Sans JP",sans-serif;font-size:.78rem;color:#2a5c3a;background:#eef6f0;border:1px solid #b0d4bc;border-left:3px solid var(--green);padding:9px 14px;line-height:1.65;}
+.tl-lbl{font-weight:700;color:var(--green);margin-right:4px;}
+
+.q-header{display:flex;align-items:flex-start;gap:13px;padding:20px 22px 16px;}
+.q-num{background:var(--sumi);color:#f4ead0;font-family:"Noto Sans JP",sans-serif;font-weight:700;font-size:.82rem;min-width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.q-text{font-size:1.05rem;line-height:1.95;flex:1;}
+.q-text u{text-decoration-color:var(--vermilion);text-decoration-thickness:2px;text-underline-offset:3px;color:var(--vermilion);font-weight:700;}
+
+.passage{background:var(--gray-light);border:1px solid var(--border);border-radius:9px;padding:15px 17px;margin:0 20px 16px;font-size:.92rem;line-height:2;max-height:340px;overflow-y:auto;}
+.passage h4{font-size:.88rem;color:var(--vermilion);margin-bottom:8px;}
+.passage p{margin-bottom:10px;}
+.passage p:last-child{margin-bottom:0;}
+.passage .note{font-size:.75rem;color:var(--gray);font-family:"Noto Sans JP",sans-serif;}
+.passage .blank{display:inline-block;border-bottom:2px solid var(--sumi);min-width:80px;text-align:center;font-weight:700;color:var(--indigo);}
+
+/* Options — vertical, numbered */
+.opts{display:flex;flex-direction:column;gap:9px;padding:4px 20px 20px;}
+.opt{display:flex;align-items:flex-start;gap:11px;border:1.5px solid var(--border);border-radius:11px;padding:12px 15px;cursor:pointer;background:#fffefb;transition:border-color .15s,background .15s;font-size:.95rem;line-height:1.65;text-align:left;font-family:inherit;color:var(--sumi);width:100%;}
+.opt:hover:not([disabled]){border-color:var(--gold);background:#fffaf0;}
+.opt-badge{flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gray);display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP",sans-serif;font-size:.78rem;font-weight:700;color:var(--gray);margin-top:1px;transition:all .15s;}
+.opt.sel{border-color:var(--indigo);background:#eef3f6;}
+.opt.sel .opt-badge{background:var(--indigo);border-color:var(--indigo);color:#fff;}
+.opt.correct{border-color:var(--green);background:var(--green-bg);}
+.opt.correct .opt-badge{background:var(--green);border-color:var(--green);color:#fff;}
+.opt.wrong{border-color:var(--vermilion);background:var(--red-bg);}
+.opt.wrong .opt-badge{background:var(--vermilion);border-color:var(--vermilion);color:#fff;}
+.opt[disabled]{cursor:default;}
+
+/* Feedback */
+.feedback{margin:0 20px 20px;padding:13px 16px;border-radius:10px;font-family:"Noto Sans JP",sans-serif;font-size:.82rem;line-height:1.8;display:none;}
+.feedback.show{display:block;animation:rise .2s ease;}
+.feedback.ok{background:var(--green-bg);border:1px solid var(--green);color:#1a4a30;}
+.feedback.ng{background:var(--red-bg);border:1px solid var(--vermilion);color:#6e2a21;}
+.fb-tag{font-weight:700;margin-right:5px;}
+
+/* Navbar */
+.navbar{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:12px;font-family:"Noto Sans JP",sans-serif;}
+.nav-btn{border:1.5px solid var(--sumi);background:transparent;color:var(--sumi);padding:10px 20px;border-radius:999px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;}
+.nav-btn:hover:not([disabled]){background:var(--sumi);color:#fff;}
+.nav-btn[disabled]{opacity:.3;cursor:not-allowed;}
+.nav-btn.primary{background:var(--vermilion);border-color:var(--vermilion);color:#fff;}
+.nav-btn.primary:hover{background:var(--vermilion-deep,#9c3a2f);}
+
+/* Result */
+#resultArea{max-width:780px;margin:28px auto;padding:0 16px 80px;display:none;}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:36px 28px;text-align:center;box-shadow:var(--shadow);}
+.ring-wrap{width:150px;height:150px;margin:8px auto 18px;position:relative;}
+.ring-wrap svg{transform:rotate(-90deg);}
+.ring-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+.ring-pct b{font-size:28px;line-height:1;}
+.ring-pct span{font-family:"Noto Sans JP",sans-serif;font-size:.68rem;color:var(--gray);margin-top:3px;}
+.result-card h2{margin:0 0 4px;font-size:1.3rem;}
+.result-comment{font-family:"Noto Sans JP",sans-serif;font-size:.82rem;color:var(--gray);margin-bottom:22px;}
+.breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0 22px;font-family:"Noto Sans JP",sans-serif;}
+.bd-item{border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:left;font-size:.72rem;}
+.bd-item .lbl{color:var(--gray);margin-bottom:3px;}
+.bd-item .val{font-size:.95rem;font-weight:700;}
+.bd-item .val.ok{color:var(--green);}
+.bd-item .val.ng{color:var(--vermilion);}
+.result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.review-list{text-align:left;margin-top:24px;}
+.rev-item{border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:9px;}
+.rev-q{font-size:.88rem;margin-bottom:5px;}
+.rev-a{font-family:"Noto Sans JP",sans-serif;font-size:.75rem;}
+.rev-a.ok{color:var(--green);}
+.rev-a.ng{color:var(--vermilion);}
+
+/* tl+kw di dalam feedback */
+.fb-tl-wrap{background:rgba(255,255,255,.45);border-radius:7px;padding:8px 11px;margin:6px 0 8px;border:1px solid rgba(0,0,0,.07);}
+.fb-tl{font-size:.8rem;line-height:1.7;font-family:"Noto Sans JP",sans-serif;}
+.fb-tl+.fb-tl{margin-top:2px;}
+
+.hidden{display:none!important;}
+@media(max-width:480px){.cover-h1{font-size:1.25rem;}.q-text{font-size:.97rem;}.opt{font-size:.88rem;}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-title"><span class="lv">N3</span> 2010年7月 新日本語能力試験</div>
+    <div class="hdr-pills">
+      <div class="pill">問 <b id="hProg">–</b></div>
+      <div class="pill">✓ <b id="hScore">0</b></div>
+    </div>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill"></div></div>
+</div>
+
+<!-- COVER -->
+<div id="cover">
+  <div class="cover-card">
+    <div class="cover-stamp">N3</div>
+    <div class="cover-kicker">Interactive Mock Exam · Kuis Interaktif</div>
+    <h1 class="cover-h1">新日本語能力試験<br><span class="acc">N3 模擬問題</span> — 2010年7月</h1>
+    <p class="cover-sub">文字・語彙（問題1〜5）＋ 語法（問題1〜3）＋ 読解（問題4〜7）の全39問。<br>
+    各問に🇮🇩 terjemahan & 📖 cara baca kanji. Bisa loncat ke soal mana saja!</p>
+    <div class="cover-meta">
+      <div><b>39問</b> 全問</div>
+      <div><b>文字・語彙・語法・読解</b></div>
+      <div>Terjemahan <b>Indonesia</b></div>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">▶ はじめる / Mulai</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quizArea">
+  <!-- Jump panel -->
+  <div class="jump-panel" id="jumpPanel">
+    <div class="jump-label">📍 Loncat ke soal</div>
+    <div id="jumpSections"></div>
+  </div>
+
+  <div class="prog-info">
+    <span class="sect-lbl" id="sectLbl">—</span>
+    <span id="progLbl">0 / 39</span>
+  </div>
+
+  <div class="qcard" id="qCard">
+    <div class="sect-desc" id="sectDesc"></div>
+    <div class="tl-box" id="tlBox"></div>
+    <div class="q-header">
+      <div class="q-num" id="qNum">1</div>
+      <div class="q-text" id="qText"></div>
+    </div>
+    <div class="passage hidden" id="passageBox"></div>
+    <div class="opts" id="optList"></div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <div class="navbar">
+    <button class="nav-btn" id="prevBtn" onclick="go(-1)" disabled>← 前へ</button>
+    <button class="nav-btn primary" id="nextBtn" onclick="go(1)" disabled>次へ →</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="resultArea">
+  <div class="result-card">
+    <div class="ring-wrap">
+      <svg width="150" height="150" viewBox="0 0 150 150">
+        <circle cx="75" cy="75" r="62" fill="none" stroke="#efe7d6" stroke-width="12"/>
+        <circle id="ringFg" cx="75" cy="75" r="62" fill="none" stroke="#bc4a3c" stroke-width="12" stroke-linecap="round" stroke-dasharray="390" stroke-dashoffset="390"/>
+      </svg>
+      <div class="ring-pct"><b id="rPct">0%</b><span id="rFrac">0/39</span></div>
+    </div>
+    <h2 id="rTitle">お疲れ様でした</h2>
+    <p class="result-comment" id="rComment"></p>
+    <div class="breakdown" id="breakdown"></div>
+    <div class="result-actions">
+      <button class="nav-btn primary" onclick="showReview()">📖 全問解説</button>
+      <button class="nav-btn" onclick="restart()">↻ もう一度</button>
+    </div>
+    <div class="review-list hidden" id="reviewList"></div>
+  </div>
+</div>
+
+<script>
+/* ===================== DATA SOAL ===================== */
+const SECTIONS = [
+/* ──────────────── 文字・語彙 ──────────────── */
+{
+  id:"m1", title:"問題１", groupLabel:"文字・語彙",
+  desc:"＿＿のことばの読み方として最もよいものを１・２・３・４から一つえらびなさい。\n[Pilih cara baca yang paling tepat untuk kata bergaris bawah]",
+  questions:[
+    { n:1, q:"プレゼントはきれいな紙で<u>包ん</u>であった。",
+      tl:"Hadiah itu dibungkus dengan kertas yang indah.",
+      kw:"包む（つつむ）= membungkus",
+      opts:["つつんで","つづんで","つうつんで","つうづんで"], ans:0,
+      exp:"✅ 包む（つつむ）= membungkus. Ingat: つ・つ・む, tidak ada pemanjangan vokal. 選択肢2〜4は存在しない読み方。" },
+    { n:2, q:"彼はダンスが<u>得意</u>だ。",
+      tl:"Dia jago menari.",
+      kw:"得意（とくい）= jago, pandai",
+      opts:["どおくい","とおくい","どくい","とくい"], ans:3,
+      exp:"✅ 得意（とくい）= jago/ahli dalam sesuatu. 得(とく)・意(い)。「とお」や「ど」は誤読。" },
+    { n:3, q:"新しい星が<u>発見</u>された。",
+      tl:"Bintang baru telah ditemukan.",
+      kw:"発見（はっけん）= penemuan",
+      opts:["はっけん","はけん","はつけん","ばっけん"], ans:0,
+      exp:"✅ 発見（はっけん）= menemukan/penemuan. 発 → はっ (促音化). はけん=派遣(berbeda), はつけん/ばっけん=tidak ada." },
+    { n:4, q:"このグラフは人口の変化を<u>表して</u>います。",
+      tl:"Grafik ini menunjukkan perubahan jumlah penduduk.",
+      kw:"表す（あらわす）= menunjukkan, menyatakan",
+      opts:["しめして","ふやして","うごかして","あらわして"], ans:3,
+      exp:"✅ 表す（あらわす）= menunjukkan/menyatakan. ❌ 示す(しめす)=menunjukkan secara langsung, 増やす(ふやす)=menambah, 動かす(うごかす)=menggerakkan." },
+    { n:5, q:"山田さんから、来週の会議の<u>件</u>で電話がありました。",
+      tl:"Ada telepon dari Yamada-san mengenai urusan rapat minggu depan.",
+      kw:"件（けん）= hal, perkara, urusan",
+      opts:["けん","あん","ほう","よう"], ans:0,
+      exp:"✅ 件（けん）= hal/urusan/perkara. ❌ 案(あん)=rencana/usulan, 方(ほう)=arah, 要(よう)=keperluan." },
+    { n:6, q:"<u>通勤</u>にとても時間がかかります。",
+      tl:"Perjalanan pulang-pergi kerja membutuhkan banyak waktu.",
+      kw:"通勤（つうきん）= pergi-pulang kerja, commuting",
+      opts:["つうがく","つうきん","つうやく","つうしん"], ans:1,
+      exp:"✅ 通勤（つうきん）= commuting/pergi kerja. ❌ 通学(つうがく)=sekolah, 通訳(つうやく)=penerjemah, 通信(つうしん)=komunikasi." },
+    { n:7, q:"この海岸は<u>岩</u>が多い。",
+      tl:"Pantai ini banyak bebatuan.",
+      kw:"岩（いわ）= batu karang, bebatuan besar",
+      opts:["かい","いわ","すな","なみ"], ans:1,
+      exp:"✅ 岩（いわ）= batu karang/bebatuan. ❌ 砂(すな)=pasir, 波(なみ)=ombak, かい=貝(kerang)." },
+    { n:8, q:"<u>努力</u>することは大切だと思います。",
+      tl:"Saya pikir berusaha keras itu hal yang penting.",
+      kw:"努力（どりょく）= usaha keras, kerja keras",
+      opts:["どうりょく","とうりょく","どりょく","とりょく"], ans:2,
+      exp:"✅ 努力（どりょく）= kerja keras/berusaha. Perhatikan: ど・りょく (bukan どう). ❌ 動力(どうりょく)=daya penggerak (kata berbeda)." }
+  ]
+},
+{
+  id:"m2", title:"問題２", groupLabel:"文字・語彙",
+  desc:"＿＿のことばを漢字で書くとき最もよいものを１・２・３・４から一つえらびなさい。\n[Pilih kanji yang tepat untuk kata bergaris bawah]",
+  questions:[
+    { n:9, q:"機械が<u>せいじょう</u>かどうかチェックした。",
+      tl:"Dicek apakah mesin berfungsi dengan normal.",
+      kw:"正常（せいじょう）= normal, wajar",
+      opts:["盛情","威常","正情","正常"], ans:3,
+      exp:"✅ 正常（せいじょう）= normal/berfungsi sebagaimana mestinya. 正(せい)=benar, 常(じょう)=biasa/normal." },
+    { n:10, q:"健康診断で<u>けつえき</u>検査を受けた。",
+      tl:"Saya menjalani tes darah saat pemeriksaan kesehatan.",
+      kw:"血液（けつえき）= darah",
+      opts:["意識","圏圧","血液","血圧"], ans:2,
+      exp:"✅ 血液（けつえき）= darah. 血(けつ)=darah, 液(えき)=cairan. ❌ 血圧(けつあつ)=tekanan darah (beda!)." },
+    { n:11, q:"母親が子どもの後ろを<u>おって</u>走っている。",
+      tl:"Ibu berlari mengejar di belakang anaknya.",
+      kw:"追う（おう）= mengejar",
+      opts:["送って","追って","押って","折って"], ans:1,
+      exp:"✅ 追う（おう）= mengejar. ❌ 送る(おくる)=mengirim, 押す(おす)=mendorong, 折る(おる)=melipat." },
+    { n:12, q:"電車を<u>おりる</u>ときに、かさを忘れてしまった。",
+      tl:"Ketika turun dari kereta, saya lupa payung.",
+      kw:"降りる（おりる）= turun (dari kendaraan)",
+      opts:["移りる","移る","降りる","降る"], ans:2,
+      exp:"✅ 降りる（おりる）= turun dari kendaraan. ❌ 移る(うつる)=berpindah/menular. 降る(ふる)=turun (hujan)—beda kata!" },
+    { n:13, q:"大学に入ってから、<u>しんちょう</u>が変わっていない。",
+      tl:"Sejak masuk universitas, tinggi badannya tidak berubah.",
+      kw:"身長（しんちょう）= tinggi badan",
+      opts:["背中","背後","身長","身張"], ans:2,
+      exp:"✅ 身長（しんちょう）= tinggi badan. ❌ 背中(せなか)=punggung, 背後(はいご)=belakang." },
+    { n:14, q:"<u>ものがたり</u>は誰でも知っている。",
+      tl:"Cerita itu diketahui semua orang.",
+      kw:"物語（ものがたり）= cerita, dongeng",
+      opts:["物語","物化","物記","物源"], ans:0,
+      exp:"✅ 物語（ものがたり）= cerita/kisah. 物(もの)+語(かたり)=bercerita tentang sesuatu." }
+  ]
+},
+{
+  id:"m3", title:"問題３", groupLabel:"文字・語彙",
+  desc:"（　）に入れるのに最もよいものを１・２・３・４から一つえらびなさい。\n[Pilih kata yang paling tepat untuk mengisi bagian (　)]",
+  questions:[
+    { n:15, q:"新しい車を買うために、店で（　）をもらってきた。",
+      tl:"Untuk membeli mobil baru, saya mengambil katalog di toko.",
+      kw:"カタログ = katalog/brosur produk",
+      opts:["カタログ","オーダー","レシート","セール"], ans:0,
+      exp:"✅ カタログ(catalog) = katalog/brosur produk. ❌ オーダー=memesan, レシート=struk, セール=diskon." },
+    { n:16, q:"田中さんの服装はとても上品な（　）がする。",
+      tl:"Pakaian Tanaka-san memberikan kesan yang sangat elegan.",
+      kw:"感じ（かんじ）がする = memberikan kesan/nuansa...",
+      opts:["関心","気分","考え","感じ"], ans:3,
+      exp:"✅ 感じがする = memberikan kesan. Pola: 〜な感じがする = terasa/terkesan... ❌ 関心=ketertarikan, 気分=suasana hati." },
+    { n:17, q:"このあたりでアパートを借りるには、毎月の（　）として五万円必要だ。",
+      tl:"Untuk menyewa apartemen di sekitar sini, diperlukan 50.000 yen per bulan sebagai uang sewa.",
+      kw:"家賃（やちん）= uang sewa rumah/apartemen",
+      opts:["価格","代金","会費","家賃"], ans:3,
+      exp:"✅ 家賃（やちん）= uang sewa. ❌ 価格(かかく)=harga barang, 代金(だいきん)=ongkos bayar, 会費(かいひ)=iuran keanggotaan." },
+    { n:18, q:"テストを始めますから、辞書をかばんの中に（　）ください。",
+      tl:"Karena ujian akan dimulai, tolong simpan kamus ke dalam tas.",
+      kw:"しまう = menyimpan, membereskan",
+      opts:["ためって","とじて","しまって","たたんで"], ans:2,
+      exp:"✅ 仕舞う(しまう) = menyimpan/membereskan. ❌ 閉じる(とじる)=menutup buku/mata, 畳む(たたむ)=melipat baju." },
+    { n:19, q:"日本の若者の（　）のファッションを知りたい。",
+      tl:"Saya ingin mengetahui tren fashion terkini anak muda Jepang.",
+      kw:"最新（さいしん）= terbaru, paling baru",
+      opts:["最大","最新","最中","最多"], ans:1,
+      exp:"✅ 最新（さいしん）= terbaru. ❌ 最大(さいだい)=terbesar, 最中(さいちゅう)=sedang berlangsung, 最多(さいた)=terbanyak." },
+    { n:20, q:"いらない新聞や雑誌を重ねて、ひもで（　）捨てた。",
+      tl:"Koran dan majalah yang tidak diperlukan ditumpuk lalu diikat dengan tali dan dibuang.",
+      kw:"縛る（しばる）= mengikat",
+      opts:["しばって","かこんで","しめて","あんで"], ans:0,
+      exp:"✅ 縛る（しばる）= mengikat (dengan tali). ❌ 囲む(かこむ)=mengepung, 締める(しめる)=mengencangkan, 編む(あむ)=merajut." },
+    { n:21, q:"急に用事ができたので、レストランの予約を（　）した。",
+      tl:"Karena tiba-tiba ada keperluan, saya membatalkan reservasi restoran.",
+      kw:"キャンセル = membatalkan (cancel)",
+      opts:["チェックアウト","カット","キャンセル","オーバー"], ans:2,
+      exp:"✅ キャンセル(cancel) = membatalkan. ❌ チェックアウト=check out hotel, カット=memotong, オーバー=melebihi." },
+    { n:22, q:"私の部屋は東（　）だ。",
+      tl:"Kamar saya menghadap ke timur.",
+      kw:"〜向き（むき）= menghadap ke arah...",
+      opts:["沿い","向き","込み","建て"], ans:1,
+      exp:"✅ 〜向き(むき) = menghadap ke arah (方角+向き). ❌ 〜沿い=di sepanjang, 〜込み=termasuk, 〜建て=bertingkat." },
+    { n:23, q:"昨日映画を見たとき、（　）して泣いてしまった。",
+      tl:"Kemarin waktu menonton film, saya sampai menangis karena terharu.",
+      kw:"感動（かんどう）= terharu, tersentuh hati",
+      opts:["歓迎","応援","期待","感動"], ans:3,
+      exp:"✅ 感動（かんどう）= terharu/tersentuh. ❌ 歓迎(かんげい)=menyambut, 応援(おうえん)=mendukung, 期待(きたい)=mengharapkan." },
+    { n:24, q:"急いでいたので、（　）違うバスに乗ってしまった。",
+      tl:"Karena terburu-buru, tanpa sadar saya naik bus yang salah.",
+      kw:"うっかり = tanpa sadar, tidak sengaja, ceroboh",
+      opts:["ぴったり","ぐっすり","うっかり","がっかり"], ans:2,
+      exp:"✅ うっかり = tanpa sadar/tidak sengaja. ❌ ぴったり=pas tepat, ぐっすり=tidur nyenyak, がっかり=kecewa." },
+    { n:25, q:"森さんは一生懸命勉強して、（　）医者になった。",
+      tl:"Mori-san belajar dengan sungguh-sungguh dan menjadi dokter yang hebat.",
+      kw:"立派な（りっぱな）= luar biasa, hebat, terhormat",
+      opts:["りっぱな","さかんな","まんぞくな","しんせんな"], ans:0,
+      exp:"✅ 立派（りっぱ）= luar biasa/hebat. ❌ さかん(盛ん)=ramai, まんぞく(満足)=puas, しんせん(新鮮)=segar." }
+  ]
+},
+{
+  id:"m4", title:"問題４", groupLabel:"文字・語彙",
+  desc:"＿＿に意味が最も近いものを、１・２・３・４から一つえらびなさい。\n[Pilih kata yang maknanya paling dekat dengan kata bergaris bawah]",
+  questions:[
+    { n:26, q:"今回の仕事はとても<u>きつい</u>。",
+      tl:"Pekerjaan kali ini sangat berat/melelahkan.",
+      kw:"きつい = berat, melelahkan, keras",
+      opts:["大変だ","簡単だ","つまらない","おもしろい"], ans:0,
+      exp:"✅ きつい ≈ 大変だ（たいへんだ）= susah/berat. ❌ 簡単だ=mudah, つまらない=membosankan, おもしろい=menarik." },
+    { n:27, q:"今日はとても<u>くたびれた</u>。",
+      tl:"Hari ini sangat melelahkan.",
+      kw:"くたびれる = kelelahan, kepayahan",
+      opts:["いそがしかった","つかれた","はずかしかった","こまった"], ans:1,
+      exp:"✅ くたびれた ≈ 疲れた（つかれた）= capek/lelah. ❌ いそがしかった=sibuk, はずかしかった=malu, こまった=bingung/susah." },
+    { n:28, q:"休みが<u>明けたら</u>、また連絡します。",
+      tl:"Jika liburan sudah selesai, saya akan menghubungi lagi.",
+      kw:"明ける（あける）= berakhir (masa/periode)",
+      opts:["とれたら","きまったら","おわったら","はじまったら"], ans:2,
+      exp:"✅ 明けたら ≈ 終わったら（おわったら）= kalau sudah selesai/usai. ❌ とれたら=kalau bisa diambil, きまったら=kalau sudah ditentukan." },
+    { n:29, q:"この店はいつも<u>混雑して</u>いる。",
+      tl:"Toko ini selalu ramai.",
+      kw:"混雑（こんざつ）= ramai/padat (orang), sesak",
+      opts:["客があまりいない","品物があまりない","客がたくさんいる","品物がたくさんある"], ans:2,
+      exp:"✅ 混雑している ≈ 客がたくさんいる = banyak pelanggan/orang. ❌ Pilihan tentang 品物(barang) tidak tepat—混雑 tentang keramaian orang." },
+    { n:30, q:"このスポーツのルールは<u>単純だ</u>。",
+      tl:"Peraturan olahraga ini sangat sederhana.",
+      kw:"単純（たんじゅん）= sederhana, simpel",
+      opts:["よく知られている","わかりやすい","あまり知られていない","わかりにくい"], ans:1,
+      exp:"✅ 単純だ ≈ わかりやすい = mudah dipahami/sederhana. ❌ よく知られている=terkenal, わかりにくい=sulit dipahami." }
+  ]
+},
+{
+  id:"m5", title:"問題５", groupLabel:"文字・語彙",
+  desc:"次のことばの使い方として最もよいものを１・２・３・４から一つえらびなさい。\n[Pilih kalimat yang penggunaan kata tersebut paling tepat]",
+  questions:[
+    { n:31, q:"落ち着く（おちつく）",
+      tl:"Tenang, tidak panik; stabil",
+      kw:"落ち着く（おちつく）= tenang, tidak panik",
+      opts:["電車が駅に落ち着いたら電話をください。","この商品は人気がなくて、棚にずっと落ち着いている。","家のかぎが穴に落ち着いた。","火事のとき落ち着いて行動しよう。"], ans:3,
+      exp:"✅ 火事のとき落ち着いて行動しよう = Bertindaklah dengan tenang saat kebakaran. ❌ 1: harusnya 着く(つく)=tiba, ❌ 2: harusnya 並ぶ(ならぶ)=berjajar, ❌ 3: harusnya 落ちる(おちる)=jatuh/masuk." },
+    { n:32, q:"はかる",
+      tl:"Mengukur (berat/panjang/volume) dengan alat",
+      kw:"はかる（計る）= mengukur dengan alat ukur",
+      opts:["りんごの数をはかってみたら、17個あった。","小麦粉やバターをきちんとはかってケーキを作った。","この宿題は一時間ぐらいで終わるとはかっています。","先月の生活費を電卓ではかった。"], ans:1,
+      exp:"✅ 小麦粉をはかってケーキを作った = mengukur tepung untuk membuat kue. ❌ 1: harusnya 数える(かぞえる)=menghitung jumlah, ❌ 3: harusnya 見込む(みこむ)=memperkirakan, ❌ 4: harusnya 計算する=menghitung uang." },
+    { n:33, q:"ユーモア",
+      tl:"Humor, rasa humor",
+      kw:"ユーモア(humor) = kata benda, bukan kata kerja/sifat",
+      opts:["私は映画が好きでユーモアした映画をよく見る。","木村さんはユーモアがあって、いっしょにいると楽しい。","きのう友達が貸してくれた本はとてもユーモアだった。","彼はユーモアに自己紹介して、名前を覚えてもらった。"], ans:1,
+      exp:"✅ ユーモアがある = punya selera humor → Kimura-san menyenangkan saat bersama. ❌ ユーモアは名詞(kata benda)! Tidak bisa dipakai sebagai kata kerja (pilihan 1) atau kata sifat-na (pilihan 3)." },
+    { n:34, q:"未来（みらい）",
+      tl:"Masa depan (jauh/abstrak)",
+      kw:"未来（みらい）= masa depan, lebih luas dari 将来",
+      opts:["地球の未来のために環境問題について考えよう。","山本さんは未来は何になりたいですか。","いつ来られるか、未来の都合を教えてください。","未来の今ごろ、大学が建つ予定です。"], ans:0,
+      exp:"✅ 地球の未来のために = demi masa depan bumi → konteks abstrak/luas sangat tepat. ❌ 2: harusnya 将来(しょうらい)=masa depan seseorang, ❌ 3&4: konteks tidak cocok." },
+    { n:35, q:"そっくり",
+      tl:"Sangat mirip, persis sama (antara dua hal berbeda)",
+      kw:"そっくり = sangat mirip/identik (membandingkan dua entitas berbeda)",
+      opts:["父は毎朝そっくりの時間に会社に行きます。","私にそっくりのサイズの服が見つかった。","私と祖母の誕生日はそっくりです。","夫と息子は顔だけでなく声までもそっくりです。"], ans:3,
+      exp:"✅ 夫と息子は顔も声もそっくり = suami dan anak sangat mirip — tepat! ❌ 1,2,3: konteksnya 'sama', harusnya 同じ(おなじ). そっくり dipakai untuk kemiripan antara DUA hal BERBEDA." }
+  ]
+},
+
+/* ──────────────── 語法 ──────────────── */
+{
+  id:"g1", title:"問題１", groupLabel:"語法（文法）",
+  desc:"次の文の（　）に入れるのに最もよいものを１・２・３・４から一つえらびなさい。\n[Pilih yang paling tepat untuk melengkapi kalimat]",
+  questions:[
+    { n:1, q:'A「田中さんは今日もアルバイトでしょうか。」\nB「今日はない（　）言っていましたよ。」',
+      tl:"A: Apakah Tanaka-san hari ini kerja paruh waktu juga? B: Katanya hari ini tidak.",
+      kw:"って = bentuk informal dari 「と」 (partikel kutipan)",
+      opts:["を","って","のを","だって"], ans:1,
+      exp:"✅ って = bentuk informal dari と (partikel kutipan). 「今日はない」adalah isi ucapan yang dikutip. ❌ を=partikel objek, だって=tapi/namun (penghubung)." },
+    { n:2, q:"わたしは山田さんに会う（　）すてきな人だといつも思う。",
+      tl:"Setiap kali bertemu Yamada-san, saya selalu merasa dia orang yang luar biasa.",
+      kw:"〜たびに = setiap kali... (kata kerja bentuk kamus + たびに)",
+      opts:["うちに","はじめに","たびに","なかに"], ans:2,
+      exp:"✅ 〜たびに = setiap kali ~. Pola: 動詞辞書形+たびに. ❌ うちに=selagi masih, はじめに=pertama-tama, なかに=di dalam." },
+    { n:3, q:"本を読んでいたら、（　）五時間も経ってしまった。",
+      tl:"Saat sedang membaca buku, tanpa terasa sudah 5 jam berlalu.",
+      kw:"いつの間にか = tanpa terasa, tanpa disadari",
+      opts:["そろそろ","だんだん","ようやく","いつの間にか"], ans:3,
+      exp:"✅ いつの間にか = tanpa terasa/tanpa disadari. ❌ そろそろ=sebentar lagi, だんだん=perlahan-lahan, ようやく=akhirnya (setelah usaha lama)." },
+    { n:4, q:"今日は七時に東京駅で友達と（　）ことになっているので、そろそろ出ます。",
+      tl:"Sudah direncanakan bertemu teman di Stasiun Tokyo jam 7, jadi akan segera berangkat.",
+      kw:"〜ことになっている = sudah ada ketentuan/rencana bahwa...",
+      opts:["会おう","会う","会った","会って"], ans:1,
+      exp:"✅ 動詞辞書形+ことになっている = ada rencana/ketentuan bahwa ~. ❌ 会おう=bentuk ajakan (volitional) tidak bisa, 会った=lampau tidak cocok, 会って=bentuk te tidak cocok." },
+    { n:5, q:"医者からたばこを（　）ように言われているのだが、なかなかやめられない。",
+      tl:"Saya diperintahkan dokter untuk berhenti merokok, tapi tidak bisa berhenti.",
+      kw:"やめる（辞める/止める）= berhenti (melakukan sesuatu)",
+      opts:["やめる","やめた","やめない","やめ"], ans:0,
+      exp:"✅ 〜ように言われる = diperintahkan agar ~. Sebelum ように pakai bentuk kamus (やめる) atau negatif (やめない). Di sini: 'berhenti merokok' = やめる. ❌ やめた/やめ bukan bentuk yang tepat." },
+    { n:6, q:"山田先生の講演の（　）、皆熱心に話を聞いていた。",
+      tl:"Selama ceramah Prof. Yamada, semua orang mendengarkan dengan antusias.",
+      kw:"あいだ（間）に vs あいだ（間）= selama (durasi kegiatan berlangsung)",
+      opts:["あいだと","あいだに","あいだ","あいだで"], ans:2,
+      exp:"✅ 〜のあいだ = selama ~(durasi). ここでは「講演の間」(selama ceramah berlangsung) → 後項が継続する動作。「に」は一時的な動作の場合。「で」は手段。「と」は不自然。" },
+    { n:7, q:'「かばん売り場はどこ？」「5階に（　）」',
+      tl:"'Di mana tempat jual tas?' 'Ada di lantai 5.'",
+      kw:"ございます = bentuk sopan dari あります (ekspresi formal untuk menyatakan keberadaan benda)",
+      opts:["ございます","いらっしゃいます","いる","おります"], ans:0,
+      exp:"✅ ございます = bentuk sangat sopan dari あります. Untuk memberitahu lokasi barang kepada pelanggan di toko. ❌ いらっしゃいます=sonkeigo untuk orang, おります=kenjougo untuk diri sendiri." },
+    { n:8, q:'（喫茶店で）A「何か食べようか。」B「わたし、スパゲッティとコーヒー。」C「わたし、おなかすいてないから、コーヒー（　）する。」',
+      tl:"(Di kafe) A:'Mau makan apa?' B:'Saya spageti dan kopi.' C:'Saya tidak lapar, jadi hanya pesan kopi saja.'",
+      kw:"だけ = hanya, saja (membatasi pada satu hal saja)",
+      opts:["だけ","だけで","だけを","だけに"], ans:0,
+      exp:"✅ コーヒーだけ(に)する = hanya pesan kopi saja. Pola: Nだけにする = membatasi/hanya ~ saja. だけで/だけを/だけに = bisa digunakan tapi yang paling natural di sini adalah だけ." },
+    { n:9, q:"勉強して、ある程度日本語が話せる（　）日本語の授業がおもしろくなった。",
+      tl:"Setelah belajar dan bisa berbicara bahasa Jepang sampai tingkat tertentu, pelajaran bahasa Jepang jadi menarik.",
+      kw:"〜ようになってから = setelah menjadi bisa... (perubahan kemampuan + titik waktu)",
+      opts:["ことができるまで","ことができてから","ようになるまで","ようになってから"], ans:3,
+      exp:"✅ 〜ようになってから = setelah menjadi bisa ~. 「話せる」表示能力的変化 → 使うのは「ようになる」。「から」表示起点。❌ ことができる より自然なのは ようになる (perubahan kemampuan)." },
+    { n:10, q:"A社の商品が腰の痛みにどのくらい効果が（　）詳しく知りたい。",
+      tl:"Saya ingin mengetahui secara detail seberapa besar efek produk perusahaan A terhadap nyeri punggung.",
+      kw:"〜かどうかについて = mengenai apakah... atau tidak",
+      opts:["あるのかによって","あるのかについて","あるのかどうかによって","あるのかどうかについて"], ans:3,
+      exp:"✅ あるのかどうかについて詳しく知りたい = ingin tahu detail tentang ada/tidaknya efek. 「どのくらい」は不明確な疑問なのでかどうか必要。「について」=mengenai (bukan 「によって」=berdasarkan)." },
+    { n:11, q:"昨日、わたしと妹でスープを作ったんですが、塩の量を間違えって味が（　）しまいました。",
+      tl:"Kemarin saya dan adik membuat sup, tapi salah takaran garam sehingga rasanya jadi terlalu asin.",
+      kw:"濃くなりすぎて = menjadi terlalu pekat/asin (intransitif)",
+      opts:["濃くなりやすくなって","濃くしやすくなって","濃くなりすぎて","濃くしすぎて"], ans:2,
+      exp:"✅ 濃くなりすぎて = menjadi terlalu pekat (intransitif, terjadi sendiri). 「味」adalah subjek yang berubah sendiri → 自動詞「なる」. ❌ 濃くする=transitif (sengaja dibuat pekat), 〜やすい=mudah (tidak tepat di sini)." },
+    { n:12, q:'A「あれ、財布がない。」B「え、本当ですか。」A「あ、ありました、ありました。」B「もう、びっくり（　）よ。でも、よかったですね。」',
+      tl:"A:'Aduh, dompetku tidak ada.' B:'Eh, benarkah?' A:'Ah, ada, ada.' B:'Astaga, jangan bikin kaget donk. Tapi syukurlah.'",
+      kw:"させないでください = tolong jangan buat (saya)... (causative negative request)",
+      opts:["させないでください","させてください","させないことにしてください","させることにしてください"], ans:0,
+      exp:"✅ びっくりさせないでください = tolong jangan bikin kaget. 「動詞使役形+ないでください」=minta agar orang lain tidak menyebabkan sesuatu. ❌ させてください=izinkan saya ~." },
+    { n:13, q:"今朝からひどく歯が痛い。すぐに歯医者に（　）、行きたくない。",
+      tl:"Gigi sangat sakit sejak tadi pagi. Sebenarnya harus pergi ke dokter gigi, tapi tidak mau pergi.",
+      kw:"行けばいいのだろうが = seharusnya pergi, tapi... (saran/logis tapi bertentangan dengan keinginan)",
+      opts:["行かなくてもいいのだろうが","行かなくてもいいようだが","行けばいいのだろうが","行ければいいようだが"], ans:2,
+      exp:"✅ 行けばいいのだろうが、行きたくない = seharusnya pergi, tapi tidak mau. 「〜ばいい」=sebaiknya ~, 「のだろうが」=mungkin memang begitu tapi... ❌ 行かなくてもいい=tidak perlu pergi (makna terbalik)." }
+  ]
+},
+{
+  id:"g2", title:"問題２", groupLabel:"語法（文法）",
+  desc:"次の文の★に入る最もよいものを、１・２・３・４から一つ選びなさい。\n[Pilih kata yang tepat untuk posisi ★ dalam kalimat]",
+  questions:[
+    { n:14, q:'A「じゃあ、あしたはコンサート会場の入り口に5時に集まりませんか。」\nB「コンサートは7時からですから、そんなに___ ___ ★ ___と思いますよ。」\n1.早く　2.開いていない　3.まだ　4.行っても',
+      tl:"A:'Besok kita kumpul di pintu masuk venue jam 5 ya?' B:'Konsertnya mulai jam 7, jadi pikir mau pergi sepagi itu pun pintunya belum buka lho.'",
+      kw:"★ = まだ (posisi ke-3 dalam urutan: 早く→行っても→まだ→開いていない)",
+      opts:["早く","開いていない","まだ","行っても"], ans:2,
+      exp:"✅ Urutan benar: そんなに[早く][行っても][まだ][開いていない]と思いますよ。★=まだ (pilihan3). Artinya: 'walaupun pergi sepagi itu, pintunya masih belum buka'." },
+    { n:15, q:'（田中先生の研究室で）学生「田中先生はいらっしゃいますか。」\n秘書「今、ほかの学生と話して___ ___ ★ ___ください。」\n1.すこし　2.から　3.待って　4.いらっしゃいます',
+      tl:"(Di ruang penelitian Prof. Tanaka) Mahasiswa: 'Apakah Prof. Tanaka ada?' Sekretaris: 'Beliau sedang berbicara dengan mahasiswa lain, mohon tunggu sebentar.'",
+      kw:"★ = 待って (urutan: いらっしゃいます→から→すこし→待って)",
+      opts:["すこし","から","待って","いらっしゃいます"], ans:2,
+      exp:"✅ Urutan: 話して[いらっしゃいます][から][すこし][待って]ください。★=待って(pilihan3). 「いらっしゃいます」=sonkeigo untuk 'sedang berbicara', 「から」=karena, 「すこし待って」=tolong tunggu sebentar." },
+    { n:16, q:"父も私も、今日はかさがなくても___ ___ ★ ___が、帰りは雨に降られてしまった。\n1.だろう　2.と思って　3.大丈夫　4.出かけた",
+      tl:"Saya dan ayah sama-sama berpikir tidak apa-apa meski tanpa payung hari ini lalu berangkat, tapi waktu pulang kehujanan.",
+      kw:"★ = 大丈夫 (urutan: 大丈夫→だろう→と思って→出かけた)",
+      opts:["だろう","と思って","大丈夫","出かけた"], ans:2,
+      exp:"✅ Urutan: かさがなくても[大丈夫][だろう][と思って][出かけた]が。★=大丈夫(pilihan3). Artinya: 'berpikir tidak apa-apa tanpa payung lalu berangkat, tapi kehujanan'." },
+    { n:17, q:"昨日動物園に行ったら、先月___ ___ ★ ___見ることができました。\n1.生まれた　2.ライオンの　3.ばかりの　4.赤ちゃんを",
+      tl:"Kemarin pergi ke kebun binatang dan bisa melihat bayi singa yang baru lahir bulan lalu.",
+      kw:"★ = ライオンの (urutan: 生まれた→ばかりの→ライオンの→赤ちゃんを)",
+      opts:["生まれた","ライオンの","ばかりの","赤ちゃんを"], ans:1,
+      exp:"✅ Urutan: 先月[生まれた][ばかりの][ライオンの][赤ちゃんを]見ることができた。★=ライオンの(pilihan2). 「〜たばかりの」=yang baru saja ~. 見る(他動詞)の対象=赤ちゃん(を)." },
+    { n:18, q:'ジョン「この「りかい」という言葉はどういう意味ですか。」\nアリ「ああ、確か「わかる」___ ★ ___んですけど。」\n1.意味だった　2.という　3.と思う　4.ような',
+      tl:"John: 'Apa arti kata \"rikai\" ini?' Ali: 'Oh, saya rasa maknanya seperti \"wakaru\" kalau tidak salah.'",
+      kw:"★ = ような (urutan: という→意味だった→ような→と思う)",
+      opts:["意味だった","という","と思う","ような"], ans:3,
+      exp:"✅ Urutan: 確か「わかる」[という][意味だった][ような][と思う]んですけど。★=ような(pilihan4). 「というのは意味だ」=disebut artinya ~, 「ような気がする」=rasanya seperti ~." }
+  ]
+},
+{
+  id:"g3", title:"問題３", groupLabel:"語法（文法）",
+  desc:"次の文章を読んで、19から23の中に入る最もよいものを、１・２・３・４から一つ選びなさい。\n[Baca teks, lalu pilih yang tepat untuk mengisi bagian 19〜23]",
+  passage:`<h4>しゃべる自動販売機</h4>
+<p>みなさんは、自動販売機がしゃべったと聞いたら、信じられますか。ほとんどの人は、自動販売機がしゃべるはずはないと言って、笑うでしょう。<span class="blank">19-a</span>、しゃべる自動販売機は本当に<span class="blank">19-b</span>。</p>
+<p>わたしの家の近所には一台の自動販売機があります。ふつうの飲み物の自動販売機に見えますが、<span class="blank">20</span>自動販売機は話すことができます。例えば、朝、自動販売機の隣に立つと、「おはようございます」と話しかけてきたり、買った後には、「いってらっしゃい」と言ってくれたりします。それから、夜、飲み物を買った人に、「お疲れさまでした。」と<span class="blank">21</span>のを見たことがあります。</p>
+<p>最初はとてもびっくりしました。機械がしゃべるのは、アニメや映画の中だけだと思っていたからです。わたしがよく見るアニメの中では、機械も人間と同じようにしゃべったり歩いたりしています。<span class="blank">22</span>、自動販売機に話しかけられるなんて、まるでアニメの世界にいるようだと思いました。</p>
+<p>今は、自動販売機が「いってらっしゃい」と話しかけてくるのにも慣れて、心で「いってきます」と答えています。もしいつか、歩く自動販売機ができても、今はもう<span class="blank">23</span>かもしれません。</p>`,
+  questions:[
+    { n:19, q:"【19-a と 19-b】に入るもの",
+      tl:"Tapi (kontras), mesin itu memang sungguh ada.",
+      kw:"ところが = tapi ternyata (kontras mengejutkan); あるのです = memang ada (penegasan)",
+      opts:["a.ところが／b.あるのです","a.なぜなら／b.あるからです","a.でも／b.あるでしょうか","a.たとえば／b.あるとしましょう"], ans:0,
+      exp:"✅ ところが(tapi ternyata/mengejutkan)+あるのです(memang ada). 前文「信じられない」→後文「本当にある」→対比・意外性 → ところが. のです=強調/説明." },
+    { n:20, q:"【20】に入るもの",
+      tl:"Mesin itu (yang spesifik = ini) bisa berbicara.",
+      kw:"この = ini (menunjuk benda tertentu yang sudah disebutkan sebelumnya)",
+      opts:["ある","一台の","この","ふつうの"], ans:2,
+      exp:"✅ この自動販売機 = mesin itu (yang sudah disebutkan: mesin di dekat rumah saya). 前文で「一台の自動販売機」を紹介済み → 指示語「この」で受ける." },
+    { n:21, q:"【21】に入るもの",
+      tl:"Pernah melihat (mesin itu) mengatakan 'Otsukaresama deshita'.",
+      kw:"言っている = sedang mengatakan (mesin sebagai subjek, intransitif)",
+      opts:["言っている","言って帰る","言われている","言われて帰る"], ans:0,
+      exp:"✅ 言っている = (mesin itu) mengatakan. 主語=自動販売機(能動的に言う). ❌ 言われている=dikatakan kepada mesin (pasif), 〜帰る=tidak masuk akal di sini." },
+    { n:22, q:"【22】に入るもの",
+      tl:"Karena itu/makanya, merasa seperti berada di dunia anime.",
+      kw:"ですから = karena itu, makanya (hubungan sebab-akibat)",
+      opts:["一方","ですから","それなのに","そのうえ"], ans:1,
+      exp:"✅ ですから = karena itu (sebab → akibat). アニメで機械がしゃべる → だから自動販売機に話しかけられるとアニメの世界みたいと感じた. ❌ 一方=di sisi lain, それなのに=padahal, そのうえ=selain itu." },
+    { n:23, q:"【23】に入るもの",
+      tl:"Mungkin sudah tidak akan terkejut lagi.",
+      kw:"おどろかない = tidak akan terkejut",
+      opts:["信じない","言い返さない","しゃべらない","おどろかない"], ans:3,
+      exp:"✅ おどろかない = tidak akan terkejut. Konteks: sudah terbiasa dengan mesin yang bicara → 歩く自動販売機が出てきても、もうおどろかない. ❌ 信じない=tidak percaya (makna berbeda)." }
+  ]
+},
+
+/* ──────────────── 読解 ──────────────── */
+{
+  id:"r4", title:"問題４", groupLabel:"読解（閲読理解）",
+  desc:"次の(1)から(4)の文章を読んで、質問に答えなさい。答えは、１・２・３・４から最もよいものを一つ選びなさい。\n[Baca teks berikut dan jawab pertanyaan. Pilih jawaban terbaik]",
+  questions:[
+    { n:24,
+      passage:`<p>（１）朝日市は、市民全員が力を合わせて美しい町を作り、気持ちのいい生活が送れるように新しい規則を作った。その規則では、次の三つのことを禁止している。①ゴミ箱などの決められた場所以外にゴミを捨てること、②歩きながらタバコを吸うこと、③指定の場所以外に自転車をとめること、である。守らなかった場合は、お金を払わされることもあるそうだ。</p>`,
+      q:"この規則について、正しいものはどれか。",
+      tl:"Mengenai peraturan ini, mana yang benar?",
+      kw:"ポイント：3つの禁止事項 ①ゴミ捨て場所以外にゴミを捨てる ②歩きタバコ ③自転車の駐輪場所",
+      opts:["自分の家以外では、ゴミを捨ててはならない。","道を歩きながら、タバコを吸ってはいけない。","自転車は、決められた場所以外走ってはいけない。","規則を守らない人は、全員お金を払わなければならない。"], ans:1,
+      exp:"✅ 2番: 歩きながらタバコを吸うことが禁止 = dilarang merokok sambil berjalan. ❌ 1番: 規則では「決められた場所以外にゴミを捨てる」のが禁止(自分の家以外ではない). ❌ 4番: お金を払わされる「こともある」(tidak selalu semua orang)." },
+    { n:25,
+      passage:`<p>（２）いい病院とは、どんな病院だろう。医師がよく話を聞いてくれる、最新の機械があるかどうかと。人によって考えは様々だ。結局、自分にとって安心できる病院がいい病院だと言えるだろう。では、どうやっていい病院を見つけるか。人に聞いたり、本や雑誌、インターネットなどで調べたり、いくらでも方法はある。しかし、最終的に選ぶのは自分である。いい病院を選ぶための物差しを、自分の中にしっかり持っていることが重要だ。</p>`,
+      q:"この文章では、病院を選ぶ時に大切なのはどんなことだと言っているか。",
+      tl:"Menurut teks ini, apa yang penting saat memilih rumah sakit?",
+      kw:"物差し（ものさし）= tolok ukur, standar penilaian diri sendiri",
+      opts:["その病院の医者がよく話を聞いてくれること","その病院に新しい機械がたくさんおいてあること","その病院が本や雑誌などで紹介されていること","その病院がよいと自分で確かに思えること"], ans:3,
+      exp:"✅ 4番: 「最終的に選ぶのは自分」「自分の中にしっかり物差しを持つ」= pilihlah berdasarkan standar diri sendiri. ❌ 1,2,3は筆者が挙げた「人それぞれの意見の例」に過ぎない。" },
+    { n:26,
+      passage:`<p>（３）下記のメールは、鈴木さんが和田さんに送ったものである。</p>
+<p>あて先：wada@nihonnnote.co.jp<br>件名：「新学期向け文房具」について</p>
+<div style="border:1px solid #ccc;padding:12px;border-radius:6px;font-size:.85rem;line-height:1.9;">
+日本ノート社<br>営業部　和田様<br><br>
+いつもお世話になっております。<br>
+先日送っていただきました「新学期向け文房具」のカタログを拝見しました。<br>
+ぜひ一度、お話をうかがいたいので、こちらに来ていただけますでしょうか。ご都合のよい日をお知らせください。<br>
+よろしくお願いいたします。<br><br>
+川村デパート<br>
+文房具担当　鈴木みどり
+</div>`,
+      q:"鈴木が和田さんにこのメールを送った目的は何か。",
+      tl:"Apa tujuan Suzuki mengirim email ini kepada Wada-san?",
+      kw:"ぜひ〜うかがいたい + こちらに来て = minta Wada-san datang untuk penjelasan",
+      opts:["文房具のカタログを送るように頼むこと","文房具のカタログを見るように頼むこと","文房具の説明にいつ来られるかと聞くこと","文房具の説明にいつ行ったらいいかと聞くこと"], ans:2,
+      exp:"✅ 3番: 「お話をうかがいたい、こちらに来ていただけますか」= meminta Wada-san (dari perusahaan alat tulis) datang ke departemen store Kawamura. Jadi bertanya kapan bisa datang." },
+    { n:27,
+      passage:`<p>（４）</p>
+<div style="border:1px solid #ccc;padding:14px;border-radius:6px;font-size:.85rem;line-height:1.95;">
+<b>あなたのかいた絵が切手になります！</b><br><br>
+川田美術館の開館10年を記念して、記念切手を２種類発売します。そこで、切手に使用する絵を募集します。<br><br>
+テーマは「平和」と「環境」の二つです。どちらかを選んで応募してください。<br><br>
+紙は指定の大きさ（20X25cm）のものを使ってください。絵の具、色えんぴつなど、何を使ってかいてもかまいません。<br><br>
+絵が選ばれた方には、５万円を差し上げます。<br><br>
+詳しくは美術館のホームページ（http://www.kawada.artor.jp）をご覧ください。<br><br>
+川田美術館
+</div>`,
+      q:"応募する人は、どうしなければならないか。",
+      tl:"Apa yang harus dilakukan oleh peserta yang ingin mendaftar?",
+      kw:"どちらかを選んで = pilih salah satu tema, bukan dua-duanya",
+      opts:["「平和と環境」というテーマで絵をかいて送る。","二つのテーマから一つ選んで絵をかいて送る。","好きな大きさの紙に絵をかいて送る。","決められた絵の具で絵をかいて送る。"], ans:1,
+      exp:"✅ 2番: 「どちらかを選んで応募」= pilih salah satu dari dua tema lalu kirim gambar. ❌ 1番: 両方ではなく1つ選ぶ. ❌ 3番: 紙のサイズは指定あり(20×25cm). ❌ 4番: 画材は何でもいい." }
+  ]
+},
+{
+  id:"r5", title:"問題５", groupLabel:"読解（閲読理解）",
+  desc:"次の(1)と(2)の文章を読んで、質問に答えなさい。答えは、１・２・３・４から最もよいものを一つ選びなさい。\n[Baca teks dan jawab pertanyaan]",
+  questions:[
+    { n:28,
+      passage:`<p>（１）最近、近所の花屋が閉店した。30年以上も「町の花屋さん」として愛着されてきた店だ。</p>
+<p>この店がオープンしたのは、わたしがまだ小学校に入る前だった。わたしにとって、①<u>店の思い出はそのまま子どものころの思い出と重なる</u>。家族の誕生日や家にお客さんが来る時などには、母と一緒にこの店で花を買っていた。</p>
+<p>小学校を卒業する時には、こんなことがあった。クラス全員でお金を出し合い、担任の先生に花束をおくることになった。「お礼の気持ちを表すために、見たことのないほど大きいのをおくろう」とわたしたちは話し合った。しかし、小学生のおこづかいの中集まったお金は少しだけだった。それで、②<u>わたしたちはどきどきしながら</u>、「大好きな先生にあげるから、できるだけ大きい花束を作ってください」とお願いした。おじさんは嫌な顔もしないで、特別大きなバラの花束を作ってくれた。</p>
+<p>30年以上もきれいな花束を作り続け、あたたかい思い出を作ってくれたおじさんに、「ありがとう、お疲れ様でした。」と言いたい。</p>`,
+      q:"①『店の思い出はそのまま子どものころの思い出と重なる』とあるが、それはどんな思い出か。",
+      tl:"Kenangan tentang toko itu bertumpang tindih dengan kenangan masa kecil. Kenangan apa itu?",
+      kw:"重なる（かさなる）= bertumpang tindih, berimpit; keluarga beli bunga saat ada acara istimewa",
+      opts:["わたしは小学校に入学した時に、この花屋が開店したこと","小学校を卒業する時に、先生といっしょにこの花屋で花を買ったこと","特別なことがある時には、よくこの店で花を買っていたこと","おじさんが大好きだったので、よくこの店で花を買っていたこと"], ans:2,
+      exp:"✅ 3番: 「家族の誕生日やお客さんが来る時に母と一緒に花を買った」= saat ada acara istimewa selalu beli bunga di sini. ❌ 1番: 店のオープンは筆者が小学校入学「前」. ❌ 4番: おじさんが好きだからという理由は書かれていない." },
+    { n:29, q:"②『わたしたちはどきどきしながら』とあるが、どうしてどきどきしたのか。",
+      tl:"Mengapa mereka merasa deg-degan saat meminta kepada pemilik toko?",
+      kw:"それで（=だから）+ お金は少し = uang sedikit tapi minta bunga besar → テンション/緊張",
+      opts:["もうすぐ閉店する花屋のおじさんに、無理なお願いをするから","嫌そうな顔をしているおじさんに、無理なお願いをするから","お店に花があまりないのに、おじさんに無理なお願いをするから","お金が少ししかないのに、おじさんに無理なお願いをするから"], ans:3,
+      exp:"✅ 4番: 「小学生のおこづかいから集めたお金は少しだけ → でも大きな花束をお願いする」→ 無理なお願いで緊張/deg-degan. ❌ 2番: おじさんは「嫌な顔もしないで」と書いてあるので違う." },
+    { n:30, q:"この文章を書いた人が一番伝えたいことは何か。",
+      tl:"Apa yang paling ingin disampaikan oleh penulis teks ini?",
+      kw:"最後の一文が主旨：「ありがとう、お疲れ様でした」= ucapan terima kasih kepada pemilik toko",
+      opts:["小学校時代にとてもお世話になった先生へのお礼の気持ち","よい思い出を作ってくれた花屋のおじさんへの感謝の気持ち","大好きだった花屋さんが閉店するので、さびしいと思う。","近所の花屋さんが閉店したので、とても不便だと思う。"], ans:1,
+      exp:"✅ 2番: 「30年以上きれいな花束を作り続けてくれたおじさんに『ありがとう、お疲れ様でした』と言いたい」= ucapan terima kasih kepada pemilik toko bunga." },
+    { n:31,
+      passage:`<p>（２）環境問題では「リサイクル」という言葉をよく聞く。リサイクルとは、いらない物を壊して、別の物に作り変えることだ。例えば、読み終わった新聞紙からトイレットペーパーを作ったりする。物を捨てればゴミになるが、リサイクルすればゴミを出さないことができる。だが、リサイクルが形を変えるのにお金がかかるし、エネルギーも使う。</p>
+<p>また、「再使用」という方法もある。再使用というのは、ものを壊さないで、何度も使うことを言う。例えば、飲んだ後のペットボトルを洗ってまた使う。それで、再使用するペットボトルは何回も使えるように、少し厚くしっかりと作られている。ドイツでは一本のペットボトルをだいたい15〜30回くらい使うそうだ。</p>
+<p>以前は、お金やエネルギーの点で、リサイクルより再使用の方がいいと考えられていた。しかし、実際に調べてみると、場合によっては再使用の方がお金やエネルギーを使うことがわかってきた。それで、最近はどちらの方が環境にいいとは単純には言えなくなっている。</p>`,
+      q:"この文章では、リサイクルとはどのようなことだと言っているか。",
+      tl:"Menurut teks ini, apa yang dimaksud dengan daur ulang (recycle)?",
+      kw:"リサイクル = いらない物を壊して別の物に作り変えること",
+      opts:["いらなくなった物から新しい物を作ること","いらなくなった物を壊して捨てること","物を壊さないで、ゴミの量を減らすこと","物を捨てないで、そのままもう一度使うこと"], ans:0,
+      exp:"✅ 1番: 「いらない物を壊して、別の物に作り変える」= mengubah sampah menjadi produk baru. ❌ 4番は「再使用」の定義." },
+    { n:32, q:"ペットボトルの再使用について、この文章で言っていることはどれか。",
+      tl:"Tentang penggunaan ulang botol PET, mana yang sesuai dengan teks?",
+      kw:"再使用するペットボトルは少し厚くしっかり作られている",
+      opts:["再使用には全然お金がかからない。","再使用した物はリサイクルできない。","再使用できるのはペットボトルだけである","再使用する物は丈夫に作られている。"], ans:3,
+      exp:"✅ 4番: 「再使用するペットボトルは何回も使えるように、少し厚くしっかりと作られている」= dibuat tebal dan kuat. ❌ 1番: お金の話は言及なし(再使用の方がお金がかかることもある). ❌ 3番: 例としてPETボトルが出ただけ." },
+    { n:33, q:"この文章では、リサイクルと再使用を比較してどのように言っているか。",
+      tl:"Bagaimana teks ini membandingkan recycle dan reuse?",
+      kw:"最近はどちらが環境にいいとは単純には言えなくなっている",
+      opts:["リサイクルは再使用より、エネルギーを使わないから環境にいい。","リサイクルより再使用の方が、ゴミが減って環境に与える影響が少ない。","リサイクルと再使用では、どちらが環境にいいか簡単には決められない。","リサイクルも再利用も、環境に問題があるから中止したほうがいい。"], ans:2,
+      exp:"✅ 3番: 「最近はどちらの方が環境にいいとは単純には言えなくなっている」= tidak bisa sederhana menentukan mana yang lebih baik. ❌ 4番: 「中止すべき」とは言っていない." }
+  ]
+},
+{
+  id:"r6", title:"問題６", groupLabel:"読解（閲読理解）",
+  desc:"次の文章を読んで、質問に答えなさい。答えは、１・２・３・４から最もよいものを一つ選びなさい。\n[Baca teks panjang berikut dan jawab pertanyaan]",
+  passage:`<p>最近、長い間働いた会社をやめて、日本そば屋を始める人が増えているそうだ。今年の4月、奥さんと二人で中村駅前に小さな店を開いた「そば屋　しんしゅう」のご主人、①<u>森さんもその一人だ</u>。「収入は減ったけど、今はやってよかったと思っています」と、森さんは言う。</p>
+<p>②<u>そば屋を開く人が多い</u>のはなぜか。そば屋は、てんぷら屋やすし屋、中華料理店やフランス料理店などに比べると、あつかう材料の種類も少なく、作り方もそれほど難しくない。また、最近は健康に気をつける人が増え、外食の時にそばのような体にいい食べ物を選ぶ人も多くなっているからだ。</p>
+<p>森さん夫婦は、一年ぐらい知り合いのそば屋を手伝いながらそばの作り方を勉強し、自分の店を開いた。だが、いつも同じ味のおいしいそばを作り続けることは本当に難しそうだ。</p>
+<p>「そば屋　しんしゅう」の開店は午前10時だが、森さんは朝6時には店に入り、準備を始める。そして、店が終わってからも、毎晩おいしいそばの作り方を熱心に研究している。「お客さんの『おいしかったよ』という言葉を聞くと、疲れも消えるんですよ」と、森さん。その横で③<u>「大変ですよ。夫とけんかをしても、店ではにこにこしていなければなりませんから」と、奥さんが笑う</u>。</p>
+<p>サラリーマン時代にはできなかった経験をしている森さんは、今、そば屋の経営を心から楽しんでいる様子だ。いろいろ苦労はありそうだが、これも人生の一つの選択だろう。</p>`,
+  questions:[
+    { n:34, q:"①『森さんもその一人だ』とあるが、それはどのような意味か。",
+      tl:"Apa maksud dari 'Mori-san juga salah satunya'?",
+      kw:"その一人 = salah satu dari orang yang berhenti kerja dan membuka soba restaurant",
+      opts:["森さんも会社をやめてそば屋を開いた人の一人である。","森さんも今年の4月にそば屋を開いた人の一人である。","森さんも奥さんと二人で店を開いた人の一人である。","森さんも中村駅の近くに店を開いた人の一人である"], ans:0,
+      exp:"✅ 1番: 「最近、長い間働いた会社をやめて日本そば屋を始める人が増えている」→ 森さんもその一人 = Mori-san juga termasuk orang yang berhenti dari perusahaan dan membuka kedai soba." },
+    { n:35, q:"②『そば屋を開く人が多い』とあるが、その理由は何だと言っているか。",
+      tl:"Mengapa banyak orang membuka kedai soba?",
+      kw:"材料が少ない・作り方が難しくない + 健康志向で人気",
+      opts:["最近、長い間働いた会社をやめさせられる人が増えているから","会社員をしているより、そば屋を開いたほうが確実に収入が増えるから","そばは、ほかの料理に比べると簡単にできるし、外食の中で人気があるから","てんぷらやすしなどに比べると、そばは値段が安いので、食べる人が多いから"], ans:2,
+      exp:"✅ 3番: 「材料の種類も少なく作り方も難しくない」+「健康志向で外食にそばを選ぶ人が増えている」= mudah dibuat dan populer untuk makan di luar. ❌ 2番/4番: teks tidak menyebut soal keuntungan atau harga murah." },
+    { n:36, q:"③『大変ですよ』とあるが、ここでは何が大変なのか。",
+      tl:"Apa yang dimaksud dengan 'susah' di sini?",
+      kw:"夫とけんかをしても店ではにこにこしていなければならない = harus tetap senyum meski bertengkar",
+      opts:["いつも同じ味でおいしいそばを作り続けなければならないこと","朝6時から店を開けるための準備を始めなければならないこと","おいしいそばの作り方を毎晩研究しなければならないこと","どんなことがあっても店では笑顔でいなければならない"], ans:3,
+      exp:"✅ 4番: 「夫とけんかをしても、店ではにこにこしていなければならない」= harus selalu tersenyum di toko apapun yang terjadi. ❌ 1,2,3は大変なことではあるが、この③の文脈では奥さんが言っているのは笑顔のこと." },
+    { n:37, q:"森さんは今、そば屋を開いたことをどう言っているか。",
+      tl:"Bagaimana pendapat Mori-san tentang membuka kedai soba sekarang?",
+      kw:"収入は減ったが、今はやってよかった = meski pendapatan turun, tidak menyesal",
+      opts:["毎日楽しいが、収入が減ったので、やらないほうがよかった。","忙しいし、夫婦げんかも増えたので、やらないほうがよかった。","特に大変なことや、難しいこともないので、やってよかった。","毎日疲れるし、おいしいそばを作るのは大変だが、やってよかった。"], ans:3,
+      exp:"✅ 4番: 毎晩研究して疲れる+大変なこともあるが「今はやってよかった」と言っている → setiap hari lelah dan membuat soba yang enak itu sulit, tapi tidak menyesal. ❌ 1,2: やらないほうがよかった(menyesal) → 文中にはない." }
+  ]
+},
+{
+  id:"r7", title:"問題７", groupLabel:"読解（閲読理解）",
+  desc:"次のページは、「デジタルカメラ教室」の案内である。これを読んで、下の質問を答えなさい。答えは、１・２・３・４から最もよいものを一つ選びなさい。\n[Halaman berikut adalah pengumuman 'Kelas Kamera Digital'. Baca dan jawab pertanyaan]",
+  passage:`<div style="border:1.5px solid var(--sumi);border-radius:10px;padding:18px;font-size:.85rem;line-height:2;">
+<p style="text-align:center;font-weight:700;font-size:1rem;margin-bottom:10px;">◇デジタルカメラ教室のご案内</p>
+<p>デジタルカメラを使ったことがある方もない方も、この教室に参加すると楽しみが広がります。きっとあなたの撮った写真をだれかに見せたくなるでしょう。</p>
+<p><b>●内容</b>　上手な写真の撮り方をわかりやすくお教えします。景色などを撮って、その写真をはがきに印刷します。</p>
+<p>＊ デジタルカメラをお持ちの方は、ご持参ください。持っていない方には、お貸しします。</p>
+<p>＊ はがきはこちらで用意します（無料）。</p>
+<p><b>●講師</b>　山本たかし（写真家）</p>
+<p><b>●日時</b>　8月23日（土）10:00〜15:00</p>
+<p><b>●集合場所</b>　ひまわり写真館　撮影は近くの大田公園で行います。</p>
+<p><b>●参加費</b>　一人500円（当日お支払いください）</p>
+<p><b>●定員</b>　20名</p>
+<p><b>●参加できる方</b>　小学5年生以上（小学生は家族の大人の方がいっしょに参加してください。）</p>
+<p><b>●申し込み方法</b>　はがきに、①住所　②氏名（小学生も学年も）　③電話番号<br>④デジタルカメラの貸し出しを希望するかどうかお申し込みください。<br>＊家族でお申し込みの場合は、全員お書きください。</p>
+<p><b>●申し込み先</b>　ひまわり写真館　デジタルカメラ教室係</p>
+<p><b>●締め切り</b>　8月8日（金）（当日の消印があるものに限り有効とする。）</p>
+<p><b>●その他</b>　動きやすい服装でご参加ください。昼食はご持参ください。（公園のまわりに店はありません）</p>
+<p>Ｔｅｌ：031-849-764</p>
+</div>`,
+  questions:[
+    { n:38, q:"この案内によると、参加者が必ず持って来なければならないものは何か。",
+      tl:"Menurut pengumuman ini, apa yang HARUS dibawa peserta?",
+      kw:"参加費=当日お支払い(必須)。昼食=ご持参(必須)。はがき=こちらで用意(不要)。カメラ=持っていない人は借りられる(任意)",
+      opts:["参加費とはがき","参加費と昼食","昼食だけ","参加費だけ"], ans:1,
+      exp:"✅ 2番: 参加費(500円、当日支払い)と昼食(ご持参ください)の両方が必須。❌ はがき=会場で用意される(無料)。カメラ=持っていない人は貸し出しあり。" },
+    { n:39, q:"小学校6年生の小林一郎くんは、この教室に参加したいと思っている。デジタルカメラを持っていないので、写真館で借りるつもりだ。申し込みのはがきの正しい書き方はどれか。",
+      tl:"Kobayashi Ichiro (kelas 6 SD) ingin ikut. Tidak punya kamera digital, mau meminjam. Bagaimana cara menulis kartu posnya yang benar?",
+      kw:"小学生は保護者同伴必須 → 家族全員の名前を書く。カメラ借りる → ④に記載。小学生 → 学年も書く",
+      opts:[
+        "①住所 ②小林花子・小林一郎（6年生） ③031-849-8713 ④カメラを借ります",
+        "①住所 ②小林花子・小林一郎（6年生） ③031-849-8713",
+        "①住所 ②小林花子・子ども一名（6年生） ③031-849-8713 ④カメラを借ります",
+        "①住所 ②小林一郎（6年生） ③031-849-8713"
+      ], ans:0,
+      exp:"✅ 1番: 小学生は大人の家族も一緒 → 全員の名前(花子+一郎)。カメラ借りる→④記載。学年も記載。❌ 2番: カメラ借りるのに④がない。❌ 4番: 大人の名前がない(家族全員書く必要あり)。" }
+  ]
+}
+];
+
+/* ──── flatten all questions ──── */
+const ALL = [];
+SECTIONS.forEach(s => {
+  s.questions.forEach(q => {
+    ALL.push({ ...q, _sid: s.id, _stitle: s.title, _sgroup: s.groupLabel, _sdesc: s.desc, _spass: s.passage || null });
+  });
+});
+const TOTAL = ALL.length;
+let cur = 0;
+const answers = new Array(TOTAL).fill(null);
+
+/* ──── nav groups for jumpbar ──── */
+const JUMP_GROUPS = [];
+let gi = -1, curGroup = null;
+SECTIONS.forEach(s => {
+  if (!curGroup || curGroup.label !== s.groupLabel) {
+    curGroup = { label: s.groupLabel, sections: [] };
+    JUMP_GROUPS.push(curGroup);
+  }
+  curGroup.sections.push({ title: s.title, qIndices: s.questions.map(q => ALL.findIndex(a => a.n === q.n && a._sid === s.id)) });
+});
+
+function startQuiz() {
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('quizArea').style.display = 'block';
+  buildJump();
+  renderQ();
+}
+
+function buildJump() {
+  const container = document.getElementById('jumpSections');
+  container.innerHTML = '';
+  JUMP_GROUPS.forEach(g => {
+    const gl = document.createElement('div');
+    gl.className = 'jump-sec-title';
+    gl.textContent = g.label;
+    container.appendChild(gl);
+    const row = document.createElement('div');
+    row.className = 'jump-nums';
+    g.sections.forEach(sec => {
+      sec.qIndices.forEach(idx => {
+        if (idx < 0) return;
+        const q = ALL[idx];
+        const b = document.createElement('button');
+        b.className = 'jbtn';
+        b.id = 'jb' + idx;
+        b.textContent = q.n;
+        b.title = q._stitle;
+        b.onclick = () => { cur = idx; renderQ(); };
+        row.appendChild(b);
+      });
+    });
+    container.appendChild(row);
+  });
+}
+
+function updateJump() {
+  ALL.forEach((_, i) => {
+    const b = document.getElementById('jb' + i);
+    if (!b) return;
+    b.className = 'jbtn';
+    if (i === cur) b.classList.add('cur');
+    else if (answers[i] !== null) b.classList.add(answers[i] === ALL[i].ans ? 'ok' : 'ng');
+  });
+}
+
+function renderQ() {
+  const q = ALL[cur];
+  document.getElementById('sectLbl').textContent = q._sgroup + ' — ' + q._stitle;
+  document.getElementById('progLbl').textContent = (cur + 1) + ' / ' + TOTAL;
+  document.getElementById('progFill').style.width = ((cur + 1) / TOTAL * 100) + '%';
+  document.getElementById('hProg').textContent = (cur + 1) + '/' + TOTAL;
+  document.getElementById('sectDesc').textContent = q._sdesc;
+  document.getElementById('qNum').textContent = q.n;
+  document.getElementById('qText').innerHTML = q.q.replace(/\n/g, '<br>');
+
+  // translation — sembunyikan, muncul setelah menjawab
+  const tlBox = document.getElementById('tlBox');
+  tlBox.innerHTML = '';
+  tlBox.style.display = 'none';
+
+  // passage
+  const pb = document.getElementById('passageBox');
+  const pass = q.passage || q._spass;
+  if (pass) { pb.innerHTML = pass; pb.classList.remove('hidden'); }
+  else { pb.innerHTML = ''; pb.classList.add('hidden'); }
+
+  // options — vertical, 1234 numbered
+  const ol = document.getElementById('optList');
+  ol.innerHTML = '';
+  q.opts.forEach((o, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    if (answers[cur] !== null) btn.disabled = true;
+    if (answers[cur] === i) btn.classList.add(i === q.ans ? 'correct' : 'wrong');
+    else if (answers[cur] !== null && i === q.ans) btn.classList.add('correct');
+    btn.innerHTML = `<span class="opt-badge">${i + 1}</span><span>${o}</span>`;
+    btn.onclick = () => { if (answers[cur] === null) pick(i); };
+    ol.appendChild(btn);
+  });
+
+  // feedback — tl + kw + exp muncul bersamaan setelah menjawab
+  const fb = document.getElementById('feedback');
+  if (answers[cur] !== null) {
+    const ok = answers[cur] === q.ans;
+    fb.className = 'feedback show ' + (ok ? 'ok' : 'ng');
+    let tlPart = '';
+    if (q.tl) tlPart += `<div class="fb-tl"><span class="tl-lbl">🇮🇩</span>${q.tl}</div>`;
+    if (q.kw) tlPart += `<div class="fb-tl"><span class="tl-lbl">📖</span>${q.kw}</div>`;
+    if (tlPart) tlPart = `<div class="fb-tl-wrap">${tlPart}</div>`;
+    fb.innerHTML = `<span class="fb-tag">${ok ? '✅ 正解！' : '❌ 不正解'}</span>${tlPart}${q.exp}`;
+  } else {
+    fb.className = 'feedback';
+    fb.innerHTML = '';
+  }
+
+  document.getElementById('prevBtn').disabled = cur === 0;
+  const nb = document.getElementById('nextBtn');
+  nb.disabled = answers[cur] === null;
+  nb.textContent = cur === TOTAL - 1 ? '結果を見る →' : '次へ →';
+
+  updateJump();
+  document.getElementById('qCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function pick(i) {
+  answers[cur] = i;
+  document.getElementById('hScore').textContent = answers.filter((a, j) => a !== null && a === ALL[j].ans).length;
+  renderQ();
+}
+
+function go(dir) {
+  if (dir === 1 && cur === TOTAL - 1) { showResult(); return; }
+  cur = Math.max(0, Math.min(TOTAL - 1, cur + dir));
+  renderQ();
+}
+
+function showResult() {
+  document.getElementById('quizArea').style.display = 'none';
+  document.getElementById('resultArea').style.display = 'block';
+  const correct = answers.filter((a, i) => a === ALL[i].ans).length;
+  const pct = Math.round(correct / TOTAL * 100);
+  document.getElementById('rPct').textContent = pct + '%';
+  document.getElementById('rFrac').textContent = correct + '/' + TOTAL;
+  const circ = 2 * Math.PI * 62;
+  document.getElementById('ringFg').style.strokeDashoffset = circ * (1 - pct / 100);
+  let title = 'お疲れ様でした！', comment = '';
+  if (pct >= 80) { title = '素晴らしい！🎉'; comment = 'N3レベル、ほぼ完璧！合格間違いなし！ / Hampir sempurna, lulus N3!'; }
+  else if (pct >= 60) { title = 'よくできました！'; comment = '合格ラインに近い！あと少し！/ Mendekati batas lulus!'; }
+  else if (pct >= 40) { title = 'もう少し！'; comment = '復習を続けよう！/ Terus berlatih!'; }
+  else { title = '頑張ろう！'; comment = 'もう一度挑戦！/ Coba lagi ya!'; }
+  document.getElementById('rTitle').textContent = title;
+  document.getElementById('rComment').textContent = comment;
+
+  const bd = document.getElementById('breakdown');
+  bd.innerHTML = '';
+  SECTIONS.forEach(s => {
+    const idxs = s.questions.map(q => ALL.findIndex(a => a.n === q.n && a._sid === s.id));
+    const sc = idxs.filter(i => i >= 0 && answers[i] === ALL[i].ans).length;
+    const d = document.createElement('div'); d.className = 'bd-item';
+    d.innerHTML = `<div class="lbl">${s.groupLabel} ${s.title}</div><div class="val ${sc === s.questions.length ? 'ok' : sc === 0 ? 'ng' : ''}">${sc}/${s.questions.length}</div>`;
+    bd.appendChild(d);
+  });
+}
+
+function showReview() {
+  const rl = document.getElementById('reviewList');
+  rl.innerHTML = '';
+  rl.classList.remove('hidden');
+  ALL.forEach((q, i) => {
+    const ok = answers[i] === q.ans;
+    const d = document.createElement('div'); d.className = 'rev-item';
+    let tlPart = '';
+    if (q.tl) tlPart += `<div class="fb-tl"><span class="tl-lbl">🇮🇩</span>${q.tl}</div>`;
+    if (q.kw) tlPart += `<div class="fb-tl"><span class="tl-lbl">📖</span>${q.kw}</div>`;
+    if (tlPart) tlPart = `<div class="fb-tl-wrap" style="margin-bottom:4px;">${tlPart}</div>`;
+    d.innerHTML = `<div class="rev-q"><b>${q.n}.</b> ${q.q.replace(/\n/g,'<br>')}</div>
+      <div class="rev-a ${ok ? 'ok' : 'ng'}">${ok ? '✅ 正解' : '❌ 不正解'} — あなた: ${answers[i] !== null ? q.opts[answers[i]] : '未回答'} / 正解: ${q.opts[q.ans]}</div>
+      <div class="rev-a" style="margin-top:6px;color:#555;">${tlPart}${q.exp}</div>`;
+    rl.appendChild(d);
+  });
+}
+
+function restart() {
+  answers.fill(null);
+  cur = 0;
+  document.getElementById('hScore').textContent = '0';
+  document.getElementById('resultArea').style.display = 'none';
+  document.getElementById('reviewList').classList.add('hidden');
+  document.getElementById('quizArea').style.display = 'block';
+  buildJump();
+  renderQ();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
